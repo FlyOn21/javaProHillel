@@ -18,7 +18,7 @@ public class Converter {
             """;
     static String optionStr = """
             choice 1 => Convert Kilometers to Miles
-            choice 2 => Convert Kilometers to Miles
+            choice 2 => Convert Miles to Kilometers
             choice 3 => Get History conversion
             choice 4 => Help
             choice 5 => Close program

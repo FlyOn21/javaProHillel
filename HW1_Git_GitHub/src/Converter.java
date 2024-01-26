@@ -107,7 +107,7 @@ public class Converter {
                 }
             } catch (InputMismatchException error) {
                 System.out.println("Something went wrong, maybe your input is incorrect.");
-                scanner.nextLine(); // Clear the scanner
+                scanner.nextLine();
             }
         }
     }

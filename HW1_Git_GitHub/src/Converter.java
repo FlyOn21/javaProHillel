@@ -25,41 +25,29 @@ public class Converter {
             """;
 
     static String help = title + optionStr;
+    static ConvertParams kilometersToMiles = new ConvertParams(
+            historyKilometersToMiles, "Input distance in kilometers: ", KILOMETERS_TO_MILES, "Kilometers", "Mails"
+    );
+    static ConvertParams milesToKilometers = new ConvertParams(
+            historyMilesToKilometers, "Input distance in miles: ", MILES_TO_KILOMETERS, "Mails", "Kilometers"
+    );
 
 
-    static void kilometersToMiles() {
+    static void conversion(ConvertParams directionOfConversion) {
         System.out.println();
-        System.out.print("Input distance in kilometers: ");
-        double kilometers = scanner.nextDouble();
-        boolean ifHistoryValueExist = historyKilometersToMiles.contains(kilometers);
+        System.out.print(directionOfConversion.requested());
+        double inputValue = scanner.nextDouble();
+        boolean ifHistoryValueExist = directionOfConversion.historyHashTable().contains(inputValue);
         if (!ifHistoryValueExist) {
-            double miles;
-            miles = KILOMETERS_TO_MILES * kilometers;
-            historyKilometersToMiles.put(kilometers, miles);
-            System.out.println(kilometers + " Kilometers = " + miles + " Mails");
+            double result = directionOfConversion.Constant() * inputValue;
+            directionOfConversion.historyHashTable().put(inputValue, result);
+            System.out.println(inputValue + " " + directionOfConversion.from() + " = " + result + " " + directionOfConversion.to());
             System.out.println();
         } else {
-            System.out.println(kilometers + " Kilometers = " + historyKilometersToMiles.get(kilometers) + " Mails");
+            System.out.println(inputValue + " " + directionOfConversion.from() + " = " + directionOfConversion.historyHashTable().get(inputValue) + " " + directionOfConversion.to());
             System.out.println();
         }
 
-    }
-
-    static void milesToKilometers() {
-        System.out.println();
-        System.out.print("Input distance in miles: ");
-        double miles = scanner.nextDouble();
-        boolean ifHistoryValueExist = historyKilometersToMiles.contains(miles);
-        if (!ifHistoryValueExist) {
-            double kilometers;
-            kilometers = MILES_TO_KILOMETERS * miles;
-            historyMilesToKilometers.put(miles, kilometers);
-            System.out.println(miles + " Miles = " + kilometers + " Kilometers");
-            System.out.println();
-        } else {
-            System.out.println(miles + " Miles = " + historyMilesToKilometers.get(miles) + " Kilometers");
-            System.out.println();
-        }
     }
 
     static void printHistory() {
@@ -85,10 +73,10 @@ public class Converter {
                 int option = scanner.nextInt();
                 switch (option) {
                     case 1:
-                        kilometersToMiles();
+                        conversion(kilometersToMiles);
                         break;
                     case 2:
-                        milesToKilometers();
+                        conversion(milesToKilometers);
                         break;
                     case 3:
                         printHistory();
